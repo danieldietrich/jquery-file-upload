@@ -43,7 +43,7 @@
 				$('#' + frameId).load(function() {
 
 					// load result from iframe
-					var response, responseStr = $(this).contentWindow.document.body.innerHTML
+					var response, responseStr = this.contentWindow.document.body.textContent
 
 					// parse result
 					try {
@@ -51,12 +51,12 @@
 					} catch (e) {
 						response = responseStr
 					}
-
+					
 					// call receive function
 					settings.onReceive.apply(input, [ response ])
 					
 					// clear iframe
-					$(this).contentWindow.location = "about:blank"
+					this.contentWindow.document.body.innerHtml = ""
 				})
 
 				// register onChange handler on file input field
