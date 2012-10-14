@@ -1,4 +1,3 @@
-
 # jquery-file-upload
 
 A lightweight jquery file upload plugin, based on an iframe to receive data.
@@ -9,7 +8,7 @@ A lightweight jquery file upload plugin, based on an iframe to receive data.
 
 The following link element is a Twitter Bootstrap button. It wraps the input field. Luckily here we have a win-win situation: The input field is invisible but located above the Bootstrap button, i.e. clickable. The hover-effect of the Bootstrap button is preserved, because it is a link.
 
-```markup
+```html
 <a class="btn file-upload">
   Upload
   <input type="file" id="my_id" name="upload" />
@@ -22,7 +21,7 @@ The url of the form is intentionally not provided with the link (which could be 
 
 The form will be automatically wrapped around the input field, when initializing the jquey-file-upload script.
 
-### The style
+### The style {less}
 
 This style is Twitter Bootstrap specific, where buttons may be rendered as links.
 
@@ -44,7 +43,7 @@ a.file-upload {
 
 The javascipt initializations are typically placed at the end of the html body. This plugin initializer is applied to a file input field. The action (i.e. url of the server side service), the valid file extensions and the callbacks are optionally defined.
 
-```markup
+```html
 <script>
   $(document).ready(function() {
     $('#my_id').fileupload({
