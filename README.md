@@ -2,7 +2,7 @@
 
 A lightweight jquery file upload plugin, based on an iframe to receive data.
 
-## Example: Play Framework (Scala) w/ Twitter Bootstrap
+## Example: Twitter Bootstrap
 
 ### The input field
 
