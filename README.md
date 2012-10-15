@@ -48,14 +48,14 @@ The javascipt initializations are typically placed at the end of the html body. 
   $(document).ready(function() {
     $('#my_id').fileupload({
       'action': '/profile/upload-photo',
+      'onSubmit': function(fileName) {
+        console.log('Sending file ' + fileName)
+      },
       'onReceive': function(response) {
         console.log( JSON.stringify(response) )
       },
-      'onSubmit': function(file) {
-        console.log('Sending file ' + file)
-      },
-      'onUnsupportedFileExtension': function(ext, validExtensions) {
-        console.log('Unsupported file extension: ' + ext +
+      'onUnsupportedFileExtension': function(currentExtension, validExtensions) {
+        console.log('Unsupported file extension: ' + currentExtension +
             '. Valid extensions are: ' + validExtensions) },
       'validExtensions': ['gif', 'png', 'jpg', 'jpeg']
     })

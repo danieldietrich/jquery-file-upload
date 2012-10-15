@@ -8,9 +8,9 @@
 		// default arguments
 		var settings = {
 			action: '',
+			onSubmit: function(fileName) {},
 			onReceive: function(response) {},
-			onSubmit: function(file) {},
-			onUsupportedFileExtension: function(validExtensions) {},
+			onUsupportedFileExtension: function(currentExtension, validExtensions) {},
 			validExtensions: undefined
 		}
 
@@ -39,39 +39,35 @@
 				// add iframe to body
 				$('body').after( iframe )
 
-				// add iframe load handler
+				// propagate content of iframe when loaded
 				$('#' + frameId).load(function() {
-
-					// load result from iframe
 					var response, responseStr = this.contentWindow.document.body.textContent
-
-					// parse result
 					try {
 						response = JSON.parse(responseStr)
 					} catch (e) {
 						response = responseStr
 					}
-					
-					// call receive function
 					settings.onReceive.apply(input, [ response ])
-					
-					// clear iframe
-					this.contentWindow.document.body.innerHtml = ""
+					this.contentWindow.document.body.innerHtml = "" // free memory
+					input.data('fileupload-busy', false)
 				})
 
 				// register onChange handler on file input field
 				input.change(function() {
-					var file = input.val()
-					if (file) {
-						var extension = file.split('.').pop().toLowerCase()
-						var isExtensionValid = !settings.validExtensions || $.inArray(extension, settings.validExtensions) >= 0
-						if (isExtensionValid) {
-							settings.onSubmit.apply(input, [ file ])
-							input.parents('form:first').submit(function(e) {
-								e.stopPropagation()
-							}).submit()
-						} else {
-							settings.onUnsupportedFileExtension.apply(input, [ extension, settings.validExtensions.join(", ") ])
+					if (input.data('fileupload-busy') !== true) {
+						var file = input.val()
+						if (file) {
+							var extension = file.split('.').pop().toLowerCase()
+							var isExtensionValid = !settings.validExtensions || $.inArray(extension, settings.validExtensions) >= 0
+							if (isExtensionValid) {
+								settings.onSubmit.apply(input, [ file ])
+								input.data('fileupload-busy', true)
+								input.parents('form:first').submit(function(e) {
+									e.stopPropagation()
+								}).submit()
+							} else {
+								settings.onUnsupportedFileExtension.apply(input, [ extension, settings.validExtensions.join(", ") ])
+							}
 						}
 					}
 				})
