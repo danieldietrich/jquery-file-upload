@@ -47,7 +47,7 @@
 					} catch (e) {
 						response = responseStr
 					}
-					settings.onReceive.apply(input, [ response ])
+					settings.onReceive.apply(input, [ response ])
 					this.contentWindow.document.body.innerHtml = "" // free memory
 					input.data('fileupload-busy', false)
 				})
